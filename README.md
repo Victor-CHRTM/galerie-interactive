@@ -143,4 +143,6 @@ const handleSaveEdit = async (id: string) => {
 
 ![Avant la modification de la position de l'image du chien](assets/captures/Etape5.1-Nuxt.png)
 
+> Je modifie la position du chien et je le met à la position 3
+
 ![Après la modification de la position de l'image du chien](assets/captures/Etape5.2-Nuxt.png)
