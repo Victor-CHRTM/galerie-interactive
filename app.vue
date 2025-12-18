@@ -22,8 +22,6 @@
  * - Des watchers
  * - Des effets de lifecycle
  */
-const config = useRuntimeConfig();
-console.log(config.public.supabaseUrl);
 </script>
 
 <style>

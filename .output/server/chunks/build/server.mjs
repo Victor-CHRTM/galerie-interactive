@@ -391,7 +391,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-nOxCAw7X.mjs')
+    component: () => import('./index-vA9_wOG3.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -822,8 +822,6 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   __name: "app",
   __ssrInlineRender: true,
   setup(__props) {
-    const config = /* @__PURE__ */ useRuntimeConfig();
-    console.log(config.public.supabaseUrl);
     return (_ctx, _push, _parent, _attrs) => {
       const _component_NuxtPage = __nuxt_component_0;
       _push(`<div${ssrRenderAttrs(mergeProps({ id: "app" }, _attrs))}>`);

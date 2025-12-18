@@ -18,7 +18,7 @@
       <div class="header-content">
         <h1 class="main-title">Galerie Interactive</h1>
         <p class="subtitle">
-          Projet pédagogique M1 - Design d'interfaces interactives
+          Projet pédagogique M1 - Modification d'une galerie d'images
         </p>
         <p class="university">Université Paris 8</p>
 
@@ -40,9 +40,7 @@
       <!-- Message d'erreur -->
       <div v-else-if="error" class="error-state">
         <p>❌ Erreur lors du chargement des images</p>
-        <button @click="loadImages" class="retry-button">
-          Réessayer
-        </button>
+        <button @click="loadImages" class="retry-button">Réessayer</button>
       </div>
 
       <!-- Grille de galerie -->
@@ -54,7 +52,9 @@
       <p>
         Propulsé par
         <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>,
-        <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>
+        <a href="https://supabase.com" target="_blank" rel="noopener"
+          >Supabase</a
+        >
         &
         <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>
       </p>
@@ -72,55 +72,56 @@
  * - useImages() pour accéder aux fonctions CRUD
  */
 
-import { ref, onMounted } from 'vue'
-import type { Image } from '~/utils/supabase'
+import { ref, onMounted } from "vue";
+import type { Image } from "~/utils/supabase";
 
 // Variables réactives
-const images = ref<Image[]>([])        // Liste des images
-const loading = ref(true)              // État de chargement
-const error = ref(false)               // État d'erreur
+const images = ref<Image[]>([]); // Liste des images
+const loading = ref(true); // État de chargement
+const error = ref(false); // État d'erreur
 
 // Récupérer les fonctions CRUD
-const { fetchImages } = useImages()
+const { fetchImages } = useImages();
 
 /**
  * Fonction pour charger les images
  */
 const loadImages = async () => {
-  loading.value = true
-  error.value = false
+  loading.value = true;
+  error.value = false;
 
   try {
     // Appel à Supabase
-    const data = await fetchImages()
-    images.value = data
+    const data = await fetchImages();
+    images.value = data;
   } catch (err) {
-    console.error('Erreur de chargement:', err)
-    error.value = true
+    console.error("Erreur de chargement:", err);
+    error.value = true;
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 /**
  * Au montage du composant, charger les images
  */
 onMounted(() => {
-  loadImages()
-})
+  loadImages();
+});
 
 /**
  * Configuration SEO de la page
  */
 useHead({
-  title: 'Galerie Interactive - M1 Paris 8',
+  title: "Galerie Interactive - CHRISTMANN Victor",
   meta: [
     {
-      name: 'description',
-      content: 'Galerie d\'images interactive - Projet pédagogique Master 1 Design d\'interfaces'
-    }
-  ]
-})
+      name: "description",
+      content:
+        "Galerie d'images interactive - Projet pédagogique Master 1 Design d'interfaces Modifiée",
+    },
+  ],
+});
 </script>
 
 <style scoped>
@@ -184,7 +185,7 @@ useHead({
 }
 
 .admin-link:hover {
-  background: #1d4ed8;
+  background: #15ae2e;
   transform: translateY(-2px);
 }
 
