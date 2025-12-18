@@ -1,0 +1,8 @@
+const GalleryGrid_vue_vue_type_style_index_0_scoped_790b10ab_lang = ".gallery-grid[data-v-790b10ab]{padding:40px 20px;width:100%}.grid-container[data-v-790b10ab]{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin:0 auto;max-width:1400px}.empty-state[data-v-790b10ab]{color:#666;padding:80px 20px;text-align:center}.empty-state p[data-v-790b10ab]{font-size:1.1rem;margin:12px 0}.empty-hint[data-v-790b10ab]{color:#999;font-size:.95rem}@media(max-width:1024px){.grid-container[data-v-790b10ab]{gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}}@media(max-width:768px){.gallery-grid[data-v-790b10ab]{padding:24px 16px}.grid-container[data-v-790b10ab]{gap:16px;grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.grid-container[data-v-790b10ab]{gap:16px;grid-template-columns:1fr}.empty-state[data-v-790b10ab]{padding:60px 20px}}";
+
+const GalleryGridStyles_CWAIsdLG = [
+  GalleryGrid_vue_vue_type_style_index_0_scoped_790b10ab_lang
+];
+
+export { GalleryGridStyles_CWAIsdLG as default };
+//# sourceMappingURL=GalleryGrid-styles.CWAIsdLG.mjs.map
