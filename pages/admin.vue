@@ -759,7 +759,9 @@ useHead({
   .admin-content {
     padding: 24px 16px;
   }
-
+  .header-content {
+    justify-content: center;
+  }
   .card {
     padding: 24px 20px;
   }
