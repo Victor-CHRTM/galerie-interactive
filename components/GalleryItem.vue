@@ -35,11 +35,11 @@
  * Props : données de l'image à afficher
  * On utilise defineProps avec TypeScript pour la validation
  */
-import type { Image } from '~/utils/supabase'
+import type { Image } from "~/utils/supabase";
 
 defineProps<{
-  image: Image
-}>()
+  image: Image;
+}>();
 </script>
 
 <style scoped>
@@ -86,12 +86,14 @@ defineProps<{
   /* Cover pour remplir tout l'espace */
   object-fit: cover;
   /* Transition du zoom */
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease-in-out;
 }
 
 /* Zoom au survol de l'image */
 .gallery-item:hover .gallery-image {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: brightness(0.8);
+  cursor: pointer;
 }
 
 .image-overlay {
@@ -125,13 +127,14 @@ defineProps<{
 .image-title {
   /* Taille du titre */
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 700;
   /* Espacement */
   margin: 0 0 8px 0;
   /* Limitation à 2 lignes */
   line-height: 1.3;
   /* Évite les coupures de mots */
   word-break: break-word;
+  color: #ffffff;
 }
 
 .image-description {

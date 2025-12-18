@@ -179,14 +179,14 @@ useHead({
   background: #2563eb;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 500;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .admin-link:hover {
   background: #15ae2e;
-  transform: translateY(-2px);
+  transform: scale(1.05);
 }
 
 /**
@@ -258,6 +258,7 @@ useHead({
 
 .page-footer a:hover {
   text-decoration: underline;
+  color: #15ae2e;
 }
 
 /**

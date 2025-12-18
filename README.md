@@ -38,7 +38,7 @@
 
 ![Ajout d'une nouvelle images avec un problème de positionnement](assets/captures/Etape3-Nuxt.png)
 
-## Gérer le positionnement des images d'une meilleure façon (pas de doublon de positionnement)
+## Gérer le positionnement des images d'une meilleure façon (pas de doublon de positionnement) lors de la création d'un élément
 
 - Dans un premier temps le but est de penser lors de l'ajout à décaler chaque positionnement d'image
 
@@ -63,4 +63,9 @@ if (positionExists) {
 - Ainsi j'obtiens bien le réajustement des positions dans le cas où il y aurait un conflit
 
 ![Avant l'ajout de l'image d'un chien - les positions sont toutes différentes](assets/captures/Etape4.1-Nuxt.png)
+
+> Je créé un nouvel élément avec la photo d'un chien et la position à '1'
+
 ![Après l'ajout de l'image d'un chien - les positions sont bien modifiées](assets/captures/Etape4.2-Nuxt.png)
+
+## Gérer le positionnement des images d'une meilleure façon lorsque l'on veut modifier les positions
