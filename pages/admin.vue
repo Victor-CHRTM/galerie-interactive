@@ -16,9 +16,7 @@
     <header class="admin-header">
       <div class="header-content">
         <h1>🎨 Interface d'Administration</h1>
-        <NuxtLink to="/" class="back-link">
-          ← Retour à la galerie
-        </NuxtLink>
+        <NuxtLink to="/" class="back-link"> ← Retour à la galerie </NuxtLink>
       </div>
     </header>
 
@@ -84,12 +82,8 @@
           </div>
 
           <!-- Bouton d'envoi -->
-          <button
-            type="submit"
-            :disabled="uploading"
-            class="submit-button"
-          >
-            {{ uploading ? '⏳ Upload en cours...' : '✓ Ajouter l\'image' }}
+          <button type="submit" :disabled="uploading" class="submit-button">
+            {{ uploading ? "⏳ Upload en cours..." : "✓ Ajouter l'image" }}
           </button>
 
           <!-- Message de succès -->
@@ -98,9 +92,7 @@
           </p>
 
           <!-- Message d'erreur -->
-          <p v-if="errorMessage" class="error-message">
-            ❌ {{ errorMessage }}
-          </p>
+          <p v-if="errorMessage" class="error-message">❌ {{ errorMessage }}</p>
         </form>
       </section>
 
@@ -116,11 +108,7 @@
 
         <!-- Liste des images -->
         <div v-else-if="images.length > 0" class="images-list">
-          <div
-            v-for="image in images"
-            :key="image.id"
-            class="image-card"
-          >
+          <div v-for="image in images" :key="image.id" class="image-card">
             <!-- Aperçu de l'image -->
             <div class="image-preview">
               <img :src="image.image_url" :alt="image.title" />
@@ -150,16 +138,10 @@
                 />
 
                 <div class="edit-actions">
-                  <button
-                    @click="handleSaveEdit(image.id)"
-                    class="save-button"
-                  >
+                  <button @click="handleSaveEdit(image.id)" class="save-button">
                     ✓ Enregistrer
                   </button>
-                  <button
-                    @click="cancelEdit"
-                    class="cancel-button"
-                  >
+                  <button @click="cancelEdit" class="cancel-button">
                     ✕ Annuler
                   </button>
                 </div>
@@ -168,23 +150,19 @@
               <!-- Mode affichage -->
               <div v-else class="view-mode">
                 <h3>{{ image.title }}</h3>
-                <p class="description">{{ image.description || 'Aucune description' }}</p>
+                <p class="description">
+                  {{ image.description || "Aucune description" }}
+                </p>
                 <p class="metadata">
-                  Position: {{ image.position }} •
-                  Créée le {{ formatDate(image.created_at) }}
+                  Position: {{ image.position }} • Créée le
+                  {{ formatDate(image.created_at) }}
                 </p>
 
                 <div class="actions">
-                  <button
-                    @click="startEdit(image)"
-                    class="edit-button"
-                  >
+                  <button @click="startEdit(image)" class="edit-button">
                     ✏️ Modifier
                   </button>
-                  <button
-                    @click="handleDelete(image)"
-                    class="delete-button"
-                  >
+                  <button @click="handleDelete(image)" class="delete-button">
                     🗑️ Supprimer
                   </button>
                 </div>
@@ -213,8 +191,8 @@
  * - Delete : suppression base + storage
  */
 
-import { ref, onMounted } from 'vue'
-import type { Image } from '~/utils/supabase'
+import { ref, onMounted } from "vue";
+import type { Image } from "~/utils/supabase";
 
 // Récupérer les fonctions CRUD
 const {
@@ -223,161 +201,174 @@ const {
   updateImage,
   deleteImage,
   uploadImage,
-  deleteImageFromStorage
-} = useImages()
+  deleteImageFromStorage,
+} = useImages();
 
 // Variables réactives
-const images = ref<Image[]>([])
-const loading = ref(true)
-const uploading = ref(false)
-const successMessage = ref('')
-const errorMessage = ref('')
+const images = ref<Image[]>([]);
+const loading = ref(true);
+const uploading = ref(false);
+const successMessage = ref("");
+const errorMessage = ref("");
 
 // Formulaire d'ajout
-const selectedFile = ref<File | null>(null)
+const selectedFile = ref<File | null>(null);
 const newImage = ref({
-  title: '',
-  description: '',
-  position: 0
-})
+  title: "",
+  description: "",
+  position: 0,
+});
 
 // Formulaire d'édition
-const editingId = ref<string | null>(null)
+const editingId = ref<string | null>(null);
 const editForm = ref({
-  title: '',
-  description: '',
-  position: 0
-})
+  title: "",
+  description: "",
+  position: 0,
+});
 
 /**
  * Charger les images au démarrage
  */
 const loadImages = async () => {
-  loading.value = true
+  loading.value = true;
   try {
-    images.value = await fetchImages()
+    images.value = await fetchImages();
   } catch (error) {
-    console.error('Erreur de chargement:', error)
+    console.error("Erreur de chargement:", error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 /**
  * Gérer la sélection d'un fichier
  */
 const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
+  const target = event.target as HTMLInputElement;
   if (target.files && target.files[0]) {
-    selectedFile.value = target.files[0]
+    selectedFile.value = target.files[0];
   }
-}
+};
 
 /**
  * Ajouter une nouvelle image
  */
 const handleAddImage = async () => {
   // Réinitialiser les messages
-  successMessage.value = ''
-  errorMessage.value = ''
+  successMessage.value = "";
+  errorMessage.value = "";
 
   // Vérifier qu'un fichier est sélectionné
   if (!selectedFile.value) {
-    errorMessage.value = 'Veuillez sélectionner un fichier'
-    return
+    errorMessage.value = "Veuillez sélectionner un fichier";
+    return;
   }
 
-  uploading.value = true
+  uploading.value = true;
 
   try {
     // 1. Upload du fichier vers Supabase Storage
-    const imageUrl = await uploadImage(selectedFile.value)
+    const imageUrl = await uploadImage(selectedFile.value);
 
     if (!imageUrl) {
-      throw new Error('Erreur lors de l\'upload du fichier')
+      throw new Error("Erreur lors de l'upload du fichier");
     }
 
-    // 2. Insertion en base de données
+    // 2. Vérification des positions existantes (valeur unique pour chaque image)
+    const positionExists = images.value.some(
+      (img) => img.position === newImage.value.position
+    );
+    // 3. Réajuster les positions (si nécéssaire => si la position choisie existe déjà)
+    if (positionExists) {
+      newImage.value.position;
+      images.value.forEach(async (img) => {
+        if (img.position >= newImage.value.position) {
+          await updateImage(img.id, { position: img.position + 1 });
+        }
+      });
+    }
+    // 4. Insertion en base de données de notre nouvelle image
     const result = await createImage({
       title: newImage.value.title,
       description: newImage.value.description,
       image_url: imageUrl,
-      position: newImage.value.position
-    })
+      position: newImage.value.position,
+    });
 
     if (!result) {
-      throw new Error('Erreur lors de l\'insertion en base')
+      throw new Error("Erreur lors de l'insertion en base");
     }
 
     // 3. Succès : rafraîchir la liste et réinitialiser le formulaire
-    successMessage.value = 'Image ajoutée avec succès !'
-    await loadImages()
-    resetAddForm()
+    successMessage.value = "Image ajoutée avec succès !";
+    await loadImages();
+    resetAddForm();
 
     // Masquer le message après 3 secondes
     setTimeout(() => {
-      successMessage.value = ''
-    }, 3000)
+      successMessage.value = "";
+    }, 3000);
   } catch (error) {
-    console.error('Erreur handleAddImage:', error)
-    errorMessage.value = 'Une erreur est survenue lors de l\'ajout'
+    console.error("Erreur handleAddImage:", error);
+    errorMessage.value = "Une erreur est survenue lors de l'ajout";
   } finally {
-    uploading.value = false
+    uploading.value = false;
   }
-}
+};
 
 /**
  * Réinitialiser le formulaire d'ajout
  */
 const resetAddForm = () => {
   newImage.value = {
-    title: '',
-    description: '',
-    position: images.value.length
-  }
-  selectedFile.value = null
+    title: "",
+    description: "",
+    position: images.value.length,
+  };
+  selectedFile.value = null;
   // Réinitialiser l'input file
-  const fileInput = document.getElementById('file-input') as HTMLInputElement
-  if (fileInput) fileInput.value = ''
-}
+  const fileInput = document.getElementById("file-input") as HTMLInputElement;
+  if (fileInput) fileInput.value = "";
+};
 
 /**
  * Démarrer l'édition d'une image
  */
 const startEdit = (image: Image) => {
-  editingId.value = image.id
+  editingId.value = image.id;
   editForm.value = {
     title: image.title,
     description: image.description,
-    position: image.position
-  }
-}
+    position: image.position,
+  };
+};
 
 /**
  * Annuler l'édition
  */
 const cancelEdit = () => {
-  editingId.value = null
+  editingId.value = null;
   editForm.value = {
-    title: '',
-    description: '',
-    position: 0
-  }
-}
+    title: "",
+    description: "",
+    position: 0,
+  };
+};
 
 /**
  * Sauvegarder les modifications
  */
 const handleSaveEdit = async (id: string) => {
   try {
-    await updateImage(id, editForm.value)
-    await loadImages()
-    cancelEdit()
+    await updateImage(id, editForm.value);
+    await loadImages();
+    cancelEdit();
   } catch (error) {
-    console.error('Erreur handleSaveEdit:', error)
-    alert('Erreur lors de la modification')
+    console.error("Erreur handleSaveEdit:", error);
+    alert("Erreur lors de la modification");
   }
-}
+};
 
 /**
  * Supprimer une image
@@ -386,59 +377,59 @@ const handleDelete = async (image: Image) => {
   // Confirmation
   const confirmed = confirm(
     `Êtes-vous sûr de vouloir supprimer "${image.title}" ?`
-  )
-  if (!confirmed) return
+  );
+  if (!confirmed) return;
 
   try {
     // 1. Supprimer de la base de données
-    await deleteImage(image.id)
+    await deleteImage(image.id);
 
     // 2. Supprimer du storage (si l'image vient de Supabase)
-    if (image.image_url.includes('supabase')) {
-      await deleteImageFromStorage(image.image_url)
+    if (image.image_url.includes("supabase")) {
+      await deleteImageFromStorage(image.image_url);
     }
 
     // 3. Rafraîchir la liste
-    await loadImages()
+    await loadImages();
   } catch (error) {
-    console.error('Erreur handleDelete:', error)
-    alert('Erreur lors de la suppression')
+    console.error("Erreur handleDelete:", error);
+    alert("Erreur lors de la suppression");
   }
-}
+};
 
 /**
  * Formater une date
  */
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('fr-FR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  })
-}
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
 
 /**
  * Charger les images au montage
  */
 onMounted(() => {
-  loadImages()
+  loadImages();
   // Initialiser la position avec le nombre d'images existantes
-  newImage.value.position = images.value.length
-})
+  newImage.value.position = images.value.length;
+});
 
 /**
  * Configuration SEO
  */
 useHead({
-  title: 'Administration - Galerie Interactive',
+  title: "Administration - Galerie Interactive",
   meta: [
     {
-      name: 'robots',
-      content: 'noindex, nofollow'
-    }
-  ]
-})
+      name: "robots",
+      content: "noindex, nofollow",
+    },
+  ],
+});
 </script>
 
 <style scoped>
