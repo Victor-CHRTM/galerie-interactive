@@ -68,4 +68,79 @@ if (positionExists) {
 
 ![Après l'ajout de l'image d'un chien - les positions sont bien modifiées](assets/captures/Etape4.2-Nuxt.png)
 
-## Gérer le positionnement des images d'une meilleure façon lorsque l'on veut modifier les positions
+## Modifications CSS
+
+- Ensuite j'ai voulu donner ma pâte au site en changeant des propriétés CSS (filter / color / transform...)
+- J'ai aussi réglé un légé soucis de centrage en mode mobile du bouton 'Retour à la Galerie'...
+
+## Dernier problème : Changer l'odre d'affichage en modification
+
+> Pour cela ce que je vais faire c'est simplement gérer le fait de monter / descendre les positions des images que cela impacte
+
+```javascript
+const handleSaveEdit = async (id: string) => {
+  try {
+    const imageToEdit = images.value.find((img) => img.id === id);
+    if (!imageToEdit) return;
+
+    const oldPosition = imageToEdit.position;
+    const newPosition = editForm.value.position;
+
+    // Si la position ne change pas → update
+    if (oldPosition === newPosition) {
+      await updateImage(id, editForm.value);
+      await loadImages();
+      cancelEdit();
+      return;
+    }
+
+    // Faire descendre une position
+    if (oldPosition < newPosition) {
+      for (const img of images.value) {
+        if (
+          img.id !== id &&
+          img.position > oldPosition &&
+          img.position <= newPosition
+        ) {
+          await updateImage(img.id, {
+            position: img.position - 1,
+          });
+        }
+      }
+    }
+
+    // Faire remonter une position
+    if (oldPosition > newPosition) {
+      for (const img of images.value) {
+        if (
+          img.id !== id &&
+          img.position >= newPosition &&
+          img.position < oldPosition
+        ) {
+          await updateImage(img.id, {
+            position: img.position + 1,
+          });
+        }
+      }
+    }
+
+    // Mise à jour finale de l'image éditée
+    await updateImage(id, {
+      ...editForm.value,
+      position: newPosition,
+    });
+
+    await loadImages();
+    cancelEdit();
+  } catch (error) {
+    console.error("Erreur handleSaveEdit:", error);
+    alert("Erreur lors de la modification");
+  }
+};
+```
+
+- Ainsi j'obtiens bien le réajustement des positions dans le cas où il y aurait un conflit...
+
+![Avant la modification de la position de l'image du chien](assets/captures/Etape5.1-Nuxt.png)
+
+![Après la modification de la position de l'image du chien](assets/captures/Etape5.2-Nuxt.png)
